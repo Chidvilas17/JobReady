@@ -17,6 +17,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -28,7 +29,7 @@ fun TopNavBar(title: String, onMenuClick: () -> Unit) {
     // add system bars padding so the bar doesn't overlap system UI
     Surface(
         modifier = Modifier.fillMaxWidth().systemBarsPadding(),
-        color = MaterialTheme.colorScheme.background,
+        color = Color(0xFFE1ECFC),
         tonalElevation = 2.dp
     ) {
         // Use a Box so the title is truly centered while icons sit at start/end

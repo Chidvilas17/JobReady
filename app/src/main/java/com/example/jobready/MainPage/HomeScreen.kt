@@ -1,5 +1,7 @@
 package com.example.jobready.MainPage
 
+import android.annotation.SuppressLint
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -37,11 +39,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.foundation.background
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import com.example.jobready.ui.theme.JobReadyTheme
 
 @Composable
@@ -145,6 +150,7 @@ private fun ProjectsGrid(projects: List<Project>, modifier: Modifier = Modifier)
 }
 
 @Composable
+@SuppressLint("DiscouragedApi")
 private fun WelcomeBanner(modifier: Modifier = Modifier) {
     Surface(
         modifier = modifier
@@ -176,7 +182,7 @@ private fun WelcomeBanner(modifier: Modifier = Modifier) {
                 )
             }
 
-            // simple illustration placeholder on the right
+            // simple illustration placeholder on the right -> load drawable `image1` at runtime
             Surface(
                 modifier = Modifier
                     .width(110.dp)
@@ -184,37 +190,34 @@ private fun WelcomeBanner(modifier: Modifier = Modifier) {
                 shape = androidx.compose.foundation.shape.RoundedCornerShape(12.dp),
                 color = Color(0xFFE1ECFC)
             ) {
-                Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
-                    Column(
+                val context = LocalContext.current
+                val drawableId = remember { context.resources.getIdentifier("image1", "drawable", context.packageName) }
+
+                if (drawableId != 0) {
+                    Image(
+                        painter = painterResource(id = drawableId),
+                        contentDescription = "Welcome illustration",
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(8.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center
-                    ) {
-                        // monitor placeholder
-                        Box(
-                            modifier = Modifier
-                                .width(56.dp)
-                                .height(36.dp)
-                                .background(Color(0xFF3C6BB0), shape = androidx.compose.foundation.shape.RoundedCornerShape(6.dp))
-                        )
-
-                        Spacer(modifier = Modifier.height(8.dp))
-
-                        // avatar/head placeholder
-                        Box(
-                            modifier = Modifier
-                                .width(28.dp)
-                                .height(28.dp)
-                                .background(Color(0xFF0B3A66), shape = CircleShape)
-                        )
+                            .padding(6.dp),
+                        contentScale = ContentScale.Crop
+                    )
+                } else {
+                    // fallback placeholder when drawable isn't available yet
+                    Box(modifier = Modifier
+                        .fillMaxSize()
+                        .padding(6.dp), contentAlignment = Alignment.Center) {
+                        Surface(
+                            shape = CircleShape,
+                            color = Color(0xFF0B3A66),
+                            modifier = Modifier.size(28.dp)
+                        ) {}
                     }
                 }
-             }
-         }
-     }
- }
+            }
+        }
+    }
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
