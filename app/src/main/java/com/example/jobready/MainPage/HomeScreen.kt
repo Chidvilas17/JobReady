@@ -22,7 +22,6 @@ import androidx.compose.material3.NavigationDrawerItemDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
@@ -41,8 +40,8 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.ui.text.style.TextOverflow
 import com.example.jobready.ui.theme.JobReadyTheme
+import androidx.compose.foundation.border
 
 @Composable
 private fun SearchBar(
@@ -105,66 +104,25 @@ private data class Project(
 @Composable
 private fun ProjectCard(project: Project, modifier: Modifier = Modifier) {
     Surface(
-        modifier = modifier,
+        modifier = modifier
+            .border(width = 2.dp, color = Color(0xFF2B6DF6), shape = androidx.compose.foundation.shape.RoundedCornerShape(16.dp)),
         shape = androidx.compose.foundation.shape.RoundedCornerShape(16.dp),
-        color = Color(0xFFF3F6FB)
+        color = Color.Transparent
     ) {
-        Column(modifier = Modifier
-            .padding(12.dp)
-            .fillMaxWidth()) {
-            Text(
-                text = project.date,
-                style = MaterialTheme.typography.labelSmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-
-            Spacer(modifier = Modifier.height(8.dp))
-
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(120.dp)
+                .padding(12.dp)
+        ) {
+            // show only the requested title text for each box
             Text(
                 text = project.title,
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.SemiBold,
-                color = MaterialTheme.colorScheme.onSurface,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
+                color = MaterialTheme.colorScheme.onSurface
             )
-
-            Spacer(modifier = Modifier.height(4.dp))
-
-            Text(
-                text = project.category,
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-
-            Spacer(modifier = Modifier.height(12.dp))
-
-            Text(
-                text = "Progress",
-                style = MaterialTheme.typography.labelSmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-
-            Spacer(modifier = Modifier.height(6.dp))
-
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                LinearProgressIndicator(
-                    progress = { project.progress },
-                    modifier = Modifier
-                        .weight(1f)
-                        .height(6.dp),
-                    color = MaterialTheme.colorScheme.primary,
-                    trackColor = Color(0xFFE9EEF8)
-                )
-
-                Spacer(modifier = Modifier.width(8.dp))
-
-                Text(
-                    text = "${(project.progress * 100).toInt()}%",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-            }
         }
     }
 }
@@ -288,12 +246,12 @@ fun HomeScreen() {
                         )
                     }
 
-                    // sample data
+                    // sample data updated to requested titles for the 4 boxes
                     val projects = listOf(
-                        Project("May 30, 2022", "Mobile App", "E - Commerce", 0.5f),
-                        Project("May 30, 2022", "Dashboard", "Hotel", 0.3f),
-                        Project("May 30, 2022", "Banner", "Marketing", 0.4f),
-                        Project("May 30, 2022", "UI/UX", "Task Manager", 0.6f)
+                        Project("May 30, 2022", "Build Resume", "", 0f),
+                        Project("May 30, 2022", "ATS Check", "", 0f),
+                        Project("May 30, 2022", "Portfolio web developer", "", 0f),
+                        Project("May 30, 2022", "Linkedin post optimizer", "", 0f)
                     )
 
                     ProjectsGrid(projects = projects)
