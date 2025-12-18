@@ -37,6 +37,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.foundation.background
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -119,7 +121,7 @@ private fun ProjectCard(project: Project, modifier: Modifier = Modifier) {
                 text = project.title,
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.SemiBold,
-                color = MaterialTheme.colorScheme.onSurface
+                color = Color(0xFF0B3A66)
             )
         }
     }
@@ -141,6 +143,78 @@ private fun ProjectsGrid(projects: List<Project>, modifier: Modifier = Modifier)
         }
     )
 }
+
+@Composable
+private fun WelcomeBanner(modifier: Modifier = Modifier) {
+    Surface(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(120.dp),
+        shape = androidx.compose.foundation.shape.RoundedCornerShape(16.dp),
+        color = Color(0xFFE1ECFC),
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(12.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = "Welcome!",
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.SemiBold,
+                    color = Color(0xFF0B3A66)
+                )
+
+                Spacer(modifier = Modifier.height(6.dp))
+
+                Text(
+                    text = "Let's schedule your projects",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+
+            // simple illustration placeholder on the right
+            Surface(
+                modifier = Modifier
+                    .width(110.dp)
+                    .height(86.dp),
+                shape = androidx.compose.foundation.shape.RoundedCornerShape(12.dp),
+                color = Color(0xFFE1ECFC)
+            ) {
+                Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(8.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
+                    ) {
+                        // monitor placeholder
+                        Box(
+                            modifier = Modifier
+                                .width(56.dp)
+                                .height(36.dp)
+                                .background(Color(0xFF3C6BB0), shape = androidx.compose.foundation.shape.RoundedCornerShape(6.dp))
+                        )
+
+                        Spacer(modifier = Modifier.height(8.dp))
+
+                        // avatar/head placeholder
+                        Box(
+                            modifier = Modifier
+                                .width(28.dp)
+                                .height(28.dp)
+                                .background(Color(0xFF0B3A66), shape = CircleShape)
+                        )
+                    }
+                }
+             }
+         }
+     }
+ }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -178,7 +252,7 @@ fun HomeScreen() {
         }
     ) {
         Scaffold(
-            topBar = { TopNavBar(title = "JobReady", onMenuClick = { openDrawer.value = true }) }
+            topBar = { TopNavBar(title = "Home", onMenuClick = { openDrawer.value = true }) }
         ) { innerPadding ->
             Column(
                 modifier = Modifier
@@ -216,6 +290,11 @@ fun HomeScreen() {
                         onValueChange = { searchQuery.value = it },
                         modifier = Modifier.fillMaxWidth()
                     )
+
+                    Spacer(modifier = Modifier.height(12.dp))
+
+                    // Welcome banner (matches pasted UI)
+                    WelcomeBanner()
                 }
 
                 // Projects section placed under the search bar
