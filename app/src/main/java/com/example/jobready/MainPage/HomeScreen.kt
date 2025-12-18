@@ -41,7 +41,6 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import com.example.jobready.ui.theme.JobReadyTheme
-import androidx.compose.foundation.border
 
 @Composable
 private fun SearchBar(
@@ -50,7 +49,7 @@ private fun SearchBar(
     modifier: Modifier = Modifier
 ) {
     Surface(
-        color = Color(0xFFF5F7FA),
+        color = Color(0xFFE1ECFC),
         shape = androidx.compose.foundation.shape.RoundedCornerShape(24.dp),
         modifier = modifier
     ) {
@@ -104,10 +103,9 @@ private data class Project(
 @Composable
 private fun ProjectCard(project: Project, modifier: Modifier = Modifier) {
     Surface(
-        modifier = modifier
-            .border(width = 2.dp, color = Color(0xFF2B6DF6), shape = androidx.compose.foundation.shape.RoundedCornerShape(16.dp)),
+        modifier = modifier,
         shape = androidx.compose.foundation.shape.RoundedCornerShape(16.dp),
-        color = Color.Transparent
+        color = Color(0xFFE1ECFC)
     ) {
         Box(
             contentAlignment = Alignment.Center,
@@ -199,7 +197,7 @@ fun HomeScreen() {
                         text = "Hi Jenifer!",
                         style = MaterialTheme.typography.headlineSmall,
                         fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.onSurface
+                        color = Color(0xFF3C6BB0)
                     )
 
                     Spacer(modifier = Modifier.height(4.dp))
@@ -236,7 +234,7 @@ fun HomeScreen() {
                             text = "Ongoing Projects",
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.onSurface
+                            color = Color(0xFF3C6BB0)
                         )
 
                         Text(
